@@ -122,6 +122,8 @@ abstract class Collider extends Component implements IGraphic, ICollidable{
    return colliderType; 
   }
   
+  abstract void setSize(PVector _size);
+  
   boolean hasMoved(){ return hasMoved; }
   
   void manageCollider(){

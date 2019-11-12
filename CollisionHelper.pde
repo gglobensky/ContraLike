@@ -285,6 +285,18 @@ static class CollisionHelper { //<>//
     return collision;
   }
 
+  static boolean pointRect(PVector point, PVector rectPos, PVector rectSize) {
+  
+    // is the point inside the rectangle's bounds?
+    if (point.x >= rectPos.x &&        // right of the left edge AND
+        point.x <= rectPos.x + rectSize.x &&   // left of the right edge AND
+        point.y >= rectPos.y &&        // below the top AND
+        point.y <= rectPos.y + rectSize.y) {   // above the bottom
+          return true;
+    }
+    return false;
+  }
+
   static PVector[] getElasticResponse(ICollidable collider, ICollidable other, CollisionInfo collisionInfo) {
     
     

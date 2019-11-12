@@ -3,6 +3,7 @@ static class GameEngine{
  static List<PhysicsObserver> physicsObjects = new ArrayList();
  static List<ICollidable> colliderObjects = new ArrayList();
  static HashMap<ICollidable, HashMap<ICollidable, CollisionInfo>> collisions = new HashMap();
+ static List<ScriptComponent> scripts = new ArrayList();
  
  static void updatePhysics(){
     int len = physicsObjects.size();
@@ -11,7 +12,25 @@ static class GameEngine{
       physicsObjects.get(i).update();
     }
  }
+ 
+ static void updateScripts(boolean doFixedUpdate){
+   int len = scripts.size();
 
+    for (int i = 0; i < len; i++){
+      scripts.get(i).update();
+      if (doFixedUpdate)
+        scripts.get(i).fixedUpdate();
+    }
+ }
+ 
+ static void initScripts(){
+   int len = scripts.size();
+
+    for (int i = 0; i < len; i++){
+      scripts.get(i).init();
+    }
+ }
+ 
  static void updateCollisions(){
     int len = colliderObjects.size();
 
@@ -75,6 +94,16 @@ static class GameEngine{
  static public void removeFromPhysicsList(PhysicsObserver physicsObserver){
    if (physicsObjects.contains(physicsObserver))
      physicsObjects.remove(physicsObserver);
+ }
+ 
+ static public void addToScriptList(ScriptComponent scriptComponent){
+   if (!scripts.contains(scriptComponent))
+     scripts.add(scriptComponent);
+ }
+ 
+ static public void removeFromScriptList(ScriptComponent scriptComponent){
+   if (scripts.contains(scriptComponent))
+     scripts.remove(scriptComponent);
  }
  
  static public void addToColliderList(ICollidable colliderObject){

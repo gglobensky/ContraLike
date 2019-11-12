@@ -4,7 +4,8 @@ interface PhysicsObserver{
 }
 
 class PhysicsBody extends Component implements PhysicsObserver{
-  PVector velocity;
+  boolean isStable = false;
+  private PVector velocity;
   PVector frameVelocity = PVector.zero();
   PVector allowedPos = PVector.zero();
   float angularVelocity;
@@ -39,6 +40,11 @@ class PhysicsBody extends Component implements PhysicsObserver{
 
   boolean isHit(){ if (collider != null) return collider.hasCollided(); else return false; }
   PVector getVelocity(){ return velocity.get(); }
+  
+  void setVelocity(float x, float y){
+    velocity.x = x;
+    velocity.y = y;
+  }
   
   void update () {
     if (elasticCollided){
@@ -75,27 +81,34 @@ class PhysicsBody extends Component implements PhysicsObserver{
   
     if (!collider.collidedAgainstSolid)
       elasticCollided = false;
+
   }
 
   void applyGravity(){
-   if (applyGravity){
-   
-       PVector gravity = new PVector (0, GameEngine.gravityForce * mass);
-       
+    PVector gravity = PVector.zero();
+    isStable = false;
+    
+   if (applyGravity)
+     gravity = new PVector (0, GameEngine.gravityForce * mass);
+
        if (collider != null && collider.collidedAgainstSolid){
          gameObject.transform.setPosition(allowedPos);
          PVector t = velocity.get();
          t.mult(-1);
-
+         
          if (t.sqrMag() > 0.1f){
            applyForce(t);
-
+           //Will have to test if applyForce(gravity) causes problem with complex collisions
+           //applyForce(gravity);
+         }
+         else{
+           isStable = true;
          }
        }else if (!collider.collidedAgainstSolid){
          applyForce(gravity);
          allowedPos = gameObject.transform.getPosition();
        }
-   }
+   
   }
   
   void applyForce (PVector force) {

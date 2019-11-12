@@ -1,0 +1,4 @@
+Corrected display bug in raycast 10-24-19
+Added customscript class and added its execution in GameEngine class
+Created playerScript and basic movements (Crouch, jump and walk)
+Added way to flip the animated script and stop/start the animation

@@ -1,12 +1,37 @@
 class AnimatedSprite extends Graphical{
  HashMap<String, SpriteAnimation> animations = new HashMap();//Action name, animation
  boolean isPlaying = true;
+ boolean flipX = false;
  String currentAction = "";
-
+ PVector scale = new PVector(1, 1);
+ PVector orientation = new PVector(1, 1);
+ 
  AnimatedSprite(GameObject _gameObject, int _layer, Camera _camera, String spriteFileName, String actionName, int sourceXQty, int sourceYQty, int sourceXMargin, int sourceYMargin, int sourceWidth, int sourceHeight, float duration){
    super(_gameObject, AnimatedSprite.class, _layer, _camera);
    currentAction = actionName;
    addAnimation(spriteFileName, actionName, sourceXQty, sourceYQty, sourceXMargin, sourceYMargin, sourceWidth, sourceHeight, duration);
+ }
+ 
+ public void setScale(PVector _scale){
+  relativeScale = _scale;
+  /*scale = new PVector(gameObject.transform.size.x * _scale.x, gameObject.transform.size.y * _scale.y);
+  for (SpriteAnimation value : animations.values()) {
+    value.setScale(scale);
+  }*/
+ }
+ 
+ public void flipX(boolean _flipX){
+   if (flipX != _flipX){
+     if (flipX){
+       orientation.x = -1;
+       orientation.y = 1;
+     }
+     else{
+       orientation.x = 1;
+       orientation.y = 1;
+     }
+     flipX = _flipX;
+   }
  }
  
  void addAnimation(String spriteFileName, String actionName, int sourceXQty, int sourceYQty, int sourceXMargin, int sourceYMargin, int sourceWidth, int sourceHeight, float duration){
@@ -77,10 +102,29 @@ class SpriteAnimation{
     }
   }
   
+  /*public void setScale(PVector _scale){
+     for (PImage p : frames){
+       p.resize((int)_scale.x, (int)_scale.y); 
+     }
+  }*/
+
   void display(Camera camera){
-    currentFrame = (int)(Time.getElapsedTime() / frameDuration) % totalFrames;
+    if (sprite.isPlaying)
+      currentFrame = (int)(Time.getElapsedTime() / frameDuration) % totalFrames;
     //println((int)(Time.getElapsedTime() / frameDuration) % totalFrames);
-    image(frames.get(currentFrame), sprite.gameObject.transform.position().x - camera.getPosition().x, sprite.gameObject.transform.position().y - camera.getPosition().y);
+    pushMatrix();
+    imageMode(CENTER);
+    scale(sprite.orientation.x, sprite.orientation.y);
+    
+    float xPos = sprite.orientation.x * (sprite.gameObject.transform.position().x - camera.getPosition().x + sprite.relativePos.x);
+    float yOffset = sprite.gameObject.transform.size.y / 2 * sprite.orientation.y;
+    xPos += sprite.gameObject.transform.size.x / 2 * sprite.orientation.x;
+    /*if (sprite.orientation.x < 0)
+      xPos -= sprite.gameObject.transform.size.x;*/
+      
+    image(frames.get(currentFrame), xPos, sprite.gameObject.transform.position().y - camera.getPosition().y + yOffset, sprite.gameObject.transform.size.x * sprite.relativeScale.x, sprite.gameObject.transform.size.y * sprite.relativeScale.y);
+    popMatrix();
+    imageMode(CORNER);
     if (frameCounter > maxFrameCount)
       frameCounter = 0;
   }

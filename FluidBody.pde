@@ -31,7 +31,7 @@ class FluidBody extends Component implements PhysicsObserver{
      for (Map.Entry<ICollidable, CollisionInfo> entry : collidedWith.entrySet()) {
         ICollidable other = entry.getKey();
         if (other.getPhysicsBody() != null){
-          other.getPhysicsBody().applyForce(getDragForce(other.getPhysicsBody())); 
+          other.getPhysicsBody().applyForce(getDragForce(other.getPhysicsBody()));
         }
       }
    }

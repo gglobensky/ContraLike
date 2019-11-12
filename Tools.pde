@@ -161,79 +161,150 @@ static class InputManager{
   }
   
   static boolean getKeyPressed(Character input){
-       return Character.toLowerCase(input) == currentKeyPressed; 
+      boolean b = Character.toLowerCase(input) == currentKeyPressed;
+      if (b)
+        currentKeyPressed = 65535;
+      return b;
 
   }
   
   static boolean getKeyPressed(String input){
-     if (input == "Alt"){
-        return currentKeyPressed == 128;
+     if (input.length() == 1){
+       return getKeyPressed(input.charAt(0));
+     }
+     else if (input == "Alt"){
+        boolean b = currentKeyPressed == 128;
+       if (b)
+         currentKeyPressed = 65535;
+       return b;
      }
      else if (input == "Control"){
-          return currentKeyPressed == 129;
+          boolean b =  currentKeyPressed == 129;
+        if (b)
+          currentKeyPressed = 65535;
+        return b;
      }
      else if (input == "Delete"){
-          return currentKeyPressed == 130;
+          boolean b =  currentKeyPressed == 130;
+        if (b)
+          currentKeyPressed = 65535;
+        return b;
      }
      else if (input == "Down"){
-          return currentKeyPressed == 131;
+          boolean b =  currentKeyPressed == 131;
+        if (b)
+          currentKeyPressed = 65535;
+        return b;
      }
      else if (input == "Enter"){
-          return currentKeyPressed == 132;
+          boolean b =  currentKeyPressed == 132;
+        if (b)
+          currentKeyPressed = 65535;
+        return b;
      }
      else if (input == "Left"){
-          return currentKeyPressed == 133;
+          boolean b =  currentKeyPressed == 133;
+        if (b)
+          currentKeyPressed = 65535;
+        return b;
      }
      else if (input == "Return"){
-          return currentKeyPressed == 134;
+          boolean b =  currentKeyPressed == 134;
+        if (b)
+          currentKeyPressed = 65535;
+        return b;
      }
      else if (input == "Right"){
-          return currentKeyPressed == 135;
+          boolean b =  currentKeyPressed == 135;
+        if (b)
+          currentKeyPressed = 65535;
+        return b;
      }
      else if (input == "Shift"){
-          return currentKeyPressed == 136;
+          boolean b =  currentKeyPressed == 136;
+        if (b)
+          currentKeyPressed = 65535;
+        return b;
      }
      else if (input == "Up"){
-          return currentKeyPressed == 137;
+          boolean b = currentKeyPressed == 137;
+        if (b)
+          currentKeyPressed = 65535;
+        return b;
      }  
      else return false;
   }
   
   static boolean getKeyReleased(Character input){
-       return Character.toLowerCase(input) == currentKeyReleased; 
-
+      boolean b = Character.toLowerCase(input) == currentKeyReleased;
+      if (b)
+        currentKeyReleased = 65535;
+      return b;
   }
   
   static boolean getKeyReleased(String input){
-     if (input == "Alt"){
-        return currentKeyReleased == 128;
+     if (input.length() == 1){
+       return getKeyReleased(input.charAt(0));
+     }
+     else if (input == "Alt"){
+        boolean b = currentKeyReleased == 128;
+       if (b)
+         currentKeyReleased = 65535;
+       return b;
      }
      else if (input == "Control"){
-          return currentKeyReleased == 129;
+          boolean b =  currentKeyReleased == 129;
+        if (b)
+          currentKeyReleased = 65535;
+        return b;
      }
      else if (input == "Delete"){
-          return currentKeyReleased == 130;
+          boolean b =  currentKeyReleased == 130;
+        if (b)
+          currentKeyReleased = 65535;
+        return b;
      }
      else if (input == "Down"){
-          return currentKeyReleased == 131;
+          boolean b =  currentKeyReleased == 131;
+        if (b)
+          currentKeyReleased = 65535;
+        return b;
      }
      else if (input == "Enter"){
-          return currentKeyReleased == 132;
+          boolean b =  currentKeyReleased == 132;
+        if (b)
+          currentKeyReleased = 65535;
+        return b;
      }
      else if (input == "Left"){
-          return currentKeyReleased == 133;
+          boolean b =  currentKeyReleased == 133;
+        if (b)
+          currentKeyReleased = 65535;
+        return b;
      }
      else if (input == "Return"){
-          return currentKeyReleased == 134;
+          boolean b =  currentKeyReleased == 134;
+        if (b)
+          currentKeyReleased = 65535;
+        return b;
      }
      else if (input == "Right"){
-          return currentKeyReleased == 135;
+          boolean b =  currentKeyReleased == 135;
+        if (b)
+          currentKeyReleased = 65535;
+        return b;
      }
      else if (input == "Shift"){
-          return currentKeyReleased == 136;
+          boolean b =  currentKeyReleased == 136;
+        if (b)
+          currentKeyReleased = 65535;
+        return b;
      }
      else if (input == "Up"){
-          return currentKeyReleased == 137;
+          boolean b = currentKeyReleased == 137;
+        if (b)
+          currentKeyReleased = 65535;
+        return b;
      }  
      else return false;
   }
@@ -243,7 +314,10 @@ static class InputManager{
   }
   
   static boolean getKey(String input){
-     if (input == "Alt"){
+     if (input.length() == 1){
+       return getKey(input.charAt(0));
+     }
+     else if (input == "Alt"){
         return inputs[128];
      }
      else if (input == "Control"){
@@ -280,7 +354,6 @@ static class InputManager{
     currentKeyPressed = 65535;
     currentKeyReleased = 65535;
   }
-  
 }
 class Screen{
     final PVector position = new PVector(0, 0);

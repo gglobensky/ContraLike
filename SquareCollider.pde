@@ -14,12 +14,12 @@ class SquareCollider extends Collider{
       shapeMode(CORNER);
       PShape t = createShape();
       t.beginShape();
-      t.vertex(0, gameObject.transform.size.y * gameObject.transform.scale.y);
-      t.vertex(gameObject.transform.size.x * gameObject.transform.scale.x, gameObject.transform.size.y * gameObject.transform.scale.y);
-      t.vertex(gameObject.transform.size.x * gameObject.transform.scale.x, 0);
+      t.vertex(0, ySize * gameObject.transform.scale.y);
+      t.vertex(xSize * gameObject.transform.scale.x, ySize * gameObject.transform.scale.y);
+      t.vertex(xSize * gameObject.transform.scale.x, 0);
       t.vertex(0, 0);
       t.endShape();
-      shape(t, gameObject.transform.getPosition().x - camera.getPosition().x, gameObject.transform.getPosition().y - camera.getPosition().y);
+      shape(t, relativePosition.x + gameObject.transform.getPosition().x - camera.getPosition().x, relativePosition.y + gameObject.transform.getPosition().y - camera.getPosition().y);
       if (currentCollisionInfo != null && currentCollisionInfo.collisionPoint != null){
         circle(PVector.sub(currentCollisionInfo.collisionPoint, camera.getPosition()).x, PVector.sub(currentCollisionInfo.collisionPoint, camera.getPosition()).y, 25);
       }
@@ -46,6 +46,13 @@ class SquareCollider extends Collider{
         
     return vertices;
   }
+  
+  public void setSize(PVector _size){
+    xSize = _size.x;
+    ySize = _size.y;
+  }
+  
+  
   
   /*public PVector getPosition(){
    PVector position = gameObject.transform.getPosition();

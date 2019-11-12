@@ -35,6 +35,11 @@ class CircleCollider extends Collider{
     }
   }
   
+  public void setSize(PVector _size){
+    radius = _size.x;
+  }
+  
+  
   void manageCollision(ICollidable against){
 
      PVector center = gameObject.transform.getPosition();
