@@ -4,6 +4,7 @@ interface PhysicsObserver{
 }
 
 class PhysicsBody extends Component implements PhysicsObserver{
+  boolean isEnabled = true;
   boolean isStable = false;
   private PVector velocity;
   PVector frameVelocity = PVector.zero();
@@ -47,57 +48,67 @@ class PhysicsBody extends Component implements PhysicsObserver{
   }
   
   void update () {
-    if (elasticCollided){
-      velocity = frameVelocity.get();
-      velocity.div(collisionCount);
-    }
-    else{
-      frameVelocity.mult(0);     
-      collisionCount = 0;
-    }
-    applyGravity();
-    velocity.add (acceleration);
-    PVector position = gameObject.transform.getPosition();
-    position.add (velocity);
-    gameObject.transform.setPosition(position);
-    
-    acceleration.mult (0);
-    
-    angularVelocity += angularAcceleration;
-    
-    float angularDragCoeff = Helper.ensureRange(1 - (1 / ((mass * 100f / surfaceArea))), 0, 0.9975f);
+    if (isEnabled){
+      if (elasticCollided){
+        velocity.add(frameVelocity.get());
+        velocity.div(collisionCount);
+      }
+      else{
+        frameVelocity.mult(0);     
+        collisionCount = 0;
+      }
+      applyGravity();
 
-    angularVelocity = ((angularVelocity * 1000f) * angularDragCoeff) / 1000f;
-    
-    if (angularVelocity < 0.001f)
-      angularVelocity = 0;
-    
-    gameObject.transform.rotateOnAxis(angularVelocity);
+      velocity.add (acceleration);
 
-    angularAcceleration = 0.0;
+      PVector position = gameObject.transform.getPosition();
+      position.add (velocity);
 
-    velocity.x = Helper.ensureRange(velocity.x, -topSpeed, topSpeed);
-    velocity.y = Helper.ensureRange(velocity.y, -topSpeed, topSpeed);
+      gameObject.transform.setPosition(position);
+      
+      acceleration.mult (0);
+      
+      angularVelocity += angularAcceleration;
+      
+      float angularDragCoeff = Helper.ensureRange(1 - (1 / ((mass * 100f / surfaceArea))), 0, 0.9975f);
   
-    if (!collider.collidedAgainstSolid)
-      elasticCollided = false;
+      angularVelocity = ((angularVelocity * 1000f) * angularDragCoeff) / 1000f;
+      
+      if (angularVelocity < 0.001f)
+        angularVelocity = 0;
+      
+      gameObject.transform.rotateOnAxis(angularVelocity);
+  
+      angularAcceleration = 0.0;
+  
+      velocity.x = Helper.ensureRange(velocity.x, -topSpeed, topSpeed);
+      velocity.y = Helper.ensureRange(velocity.y, -topSpeed, topSpeed);
+
+      if (!collider.collidedAgainstSolid)
+        elasticCollided = false;
+      
+    }
 
   }
 
   void applyGravity(){
     PVector gravity = PVector.zero();
     isStable = false;
-    
+
    if (applyGravity)
      gravity = new PVector (0, GameEngine.gravityForce * mass);
 
-       if (collider != null && collider.collidedAgainstSolid){
+       if (collider != null && collider.isSolid && collider.collidedAgainstSolid){
          gameObject.transform.setPosition(allowedPos);
          PVector t = velocity.get();
          t.mult(-1);
-         
+   
          if (t.sqrMag() > 0.1f){
            applyForce(t);
+           /*if (velocity.x == -acceleration.x && velocity.y == -acceleration.y){
+             println("Stuck");
+             applyForce(new PVector(0, -0.05f));
+           }*/
            //Will have to test if applyForce(gravity) causes problem with complex collisions
            //applyForce(gravity);
          }
@@ -108,7 +119,7 @@ class PhysicsBody extends Component implements PhysicsObserver{
          applyForce(gravity);
          allowedPos = gameObject.transform.getPosition();
        }
-   
+
   }
   
   void applyForce (PVector force) {

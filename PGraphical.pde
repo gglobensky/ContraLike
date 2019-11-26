@@ -6,8 +6,46 @@ static enum Shape{
   TRIANGLE
 }
 
-//This belongs to Graphical
-static Map<Shape, PShape> basicShapes = new HashMap();
+public class ShapesInitializerInstance{
+
+  public void init(){
+    if (basicShapes.size() == 0){
+      PShape createdShape = null;
+  
+      createdShape = createShape();
+      createdShape.beginShape();
+      for (float a = 0; a < TWO_PI; a += 0.1) {
+        createdShape.vertex(cos(a)*100, sin(a)*100);
+      }
+      createdShape.endShape();
+      basicShapes.put(Shape.ELLIPSE, createdShape);
+      
+      createdShape = null;
+      
+      createdShape = createShape();
+      createdShape.beginShape(QUADS);
+      createdShape.vertex(0, 0);
+      createdShape.vertex(0, 20);
+      createdShape.vertex(20, 20);
+      createdShape.vertex(20, 0);
+      createdShape.endShape();
+         
+      basicShapes.put(Shape.RECTANGLE, createdShape);
+      
+      createdShape = null;
+    
+      createdShape = createShape();
+      createdShape.beginShape(TRIANGLES);
+      createdShape.vertex(0, 0);
+      createdShape.vertex(10, 20);
+      createdShape.vertex(20, 0);
+      createdShape.endShape();
+      
+      basicShapes.put(Shape.TRIANGLE, createdShape);
+    }
+  }
+}
+
 public class PGraphical extends Graphical{
   
   PShape myShape;

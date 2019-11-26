@@ -20,7 +20,6 @@ class PVector {
     return new PVector((float)px, (float)py);
   }
   
-  
   public float dot(PVector v) {
    return (this.x * v.x + this.y * v.y);
   }

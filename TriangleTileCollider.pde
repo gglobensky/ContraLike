@@ -1,21 +1,39 @@
 class TriangleTileCollider extends TileCollider{
   PVector vertices[] = new PVector[3];
+  PShape debugShape;
   
   float getRadius(){ return 0; }
   PVector getPosition(){ return tile.startPosition.get(); }
   PVector getSize(){ return new PVector(xSize, ySize); }
+  
+  void manageDebugShape(){
+    String k = vertices[0].toString() + vertices[1].toString() + vertices[2].toString();
+    if (complexShapes.containsKey(k)){
+      debugShape = complexShapes.get(k);
+    } 
+    else {
+      debugShape = createShape();
+      debugShape.beginShape();
+      for (int i = 0; i < 3; i++){
+        debugShape.vertex(vertices[i].x, vertices[i].y);
+      }
+      debugShape.endShape();
+      complexShapes.put(k, debugShape);
+    }
+  }
+  
   void display(Camera camera){
 
       stroke (0);
       fill (xSize, xSize, xSize, 255);
       shapeMode(CORNER);
-      PShape t = createShape();
+      /*PShape t = createShape();
       t.beginShape();
       for (int i = 0; i < 3; i++){
         t.vertex(vertices[i].x, vertices[i].y);
       }
-      t.endShape();
-      shape(t, tile.startPosition.x - camera.getPosition().x, tile.startPosition.y - camera.getPosition().y);
+      t.endShape();*/
+      shape(debugShape, tile.startPosition.x - camera.getPosition().x, tile.startPosition.y - camera.getPosition().y);
  }
   
   TriangleTileCollider(Tile _tile, int _xSize, int _ySize, PVector vertex1, PVector vertex2, PVector vertex3){
@@ -24,6 +42,7 @@ class TriangleTileCollider extends TileCollider{
     vertices[1] = new PVector(Helper.ensureRange(vertex2.x, 0, _xSize), Helper.ensureRange(vertex2.y, 0, _ySize));
     vertices[2] = new PVector(Helper.ensureRange(vertex3.x, 0, _xSize), Helper.ensureRange(vertex3.y, 0, _ySize));
     colliderType = ColliderType.TRIANGLE;
+    manageDebugShape();
     //colliders.add(this);
   }
   

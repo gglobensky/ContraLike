@@ -9,6 +9,8 @@ interface ICollidable<T>{
   PVector getVelocity();
   void setVelocity(PVector _velocity);
   float getMass();
+  String getTag();
+  void setTag(String _tag);
   HashMap<ICollidable, CollisionInfo> getCollidedWith();
   void addCollidedWith(ICollidable collider, CollisionInfo collisionInfo);
   void setCollided(boolean hasCollided);
@@ -47,6 +49,10 @@ abstract class Collider extends Component implements IGraphic, ICollidable{
       camera.addToGraphicsList(this, layer);
   }
   
+  public void setTag(String _tag){
+    gameObject.tag = _tag;
+  }
+  public String getTag() { return gameObject.tag; }
   float getRestitutionCoeff() { return restitutionCoeff; }
   float getMass() { return physicsBody != null? physicsBody.mass : 1; }
   PVector getVelocity() { return physicsBody != null? physicsBody.getVelocity() : PVector.zero(); }

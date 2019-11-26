@@ -1,4 +1,11 @@
-Corrected display bug in raycast 10-24-19
-Added customscript class and added its execution in GameEngine class
-Created playerScript and basic movements (Crouch, jump and walk)
-Added way to flip the animated script and stop/start the animation
+"Corrected bugs in tileCollider size and assignment,
+Made it possible to use angled collider and for 
+player to walk on them, cleaned playerScript,
+added way for raycasts to detect triangleColliders
+and bring up the tag of the hit object. Migrated
+display for debug to a flyweight type of pattern.
+Moved global static lists to main file.
+Made it possible to swim, cleaned up main file,
+created Game class and moved most of the code there.
+Added diagonal aiming and running anim and up aiming idle
+anim.

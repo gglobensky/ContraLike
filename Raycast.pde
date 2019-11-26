@@ -9,14 +9,17 @@ class Raycast implements IGraphic{
      direction = _direction;
    }
    
-   boolean raycastHit(){
+   //IDEALLY, A FLAG SHOULD BE SET TO TELL RAYCAST ALREADY HAS BEEN CALCULATED FOR THIS FRAME, GAMEENGINE SHOULD THEN MANAGE IT.
+   //WITH THE CURRENT CONFIG, I COULD CHECK THE SAME RAYCAST N TIMES BY FRAME WHICH IS AWFUL.
+   String raycastHit(){
+     String againstTag = "";
      int len = GameEngine.colliderObjects.size();
      boolean result = false;
      PVector lineEnd = origin.get();
      lineEnd.add(direction);
 
      for (int i = 0; i < len; i++){
-     
+     againstTag = "";
      ICollidable against = GameEngine.colliderObjects.get(i);    
      PVector againstPos = against.getPosition();
      PVector againstSize = against.getSize();
@@ -40,6 +43,9 @@ class Raycast implements IGraphic{
      if ((xOriginInside && (yOriginInside || yEndInside || yThrough)) || (xEndInside && (yOriginInside || yEndInside || yThrough)) || 
      (yOriginInside && (xOriginInside || xEndInside || xThrough)) || (yEndInside && (xOriginInside || xEndInside || xThrough))
      || (xThrough && yThrough) || (xOriginInside && xEndInside) || (yOriginInside && yEndInside)){
+       
+       againstTag = against.getTag();
+       
        if (against.getColliderType() == ColliderType.SQUARE){
           PVector[] vertex = { againstPos, new PVector(againstPos.x, againstPos.y + againstSize.y), 
                               new PVector(againstPos.x + againstSize.x, againstPos.y + againstSize.y), 
@@ -61,11 +67,16 @@ class Raycast implements IGraphic{
          result = CollisionHelper.lineCircle(origin.x, origin.y, lineEnd.x, lineEnd.y, againstCenter.x, againstCenter.y , againstRadius);
          
        }
+       else if (against.getColliderType() == ColliderType.TRIANGLE){
+
+         result = CollisionHelper.linePolyCollision(origin, lineEnd, against.getVertices());
+         
+       }
        if (result)
-         return result;
+         return againstTag;
     }
    }
-    return false;
+    return null;
   }
   
   public void removeFromGraphicsList(Camera camera, int layer){

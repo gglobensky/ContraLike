@@ -1,0 +1,18 @@
+Design patterns utilisés :
+Template pour mes colliders (Abstract Collider et concrete SquareCollider, CircleCollider...)
+Composition pour mon système de GameObject (Collider, sprites, scripts, physicsBodies... sont tous des composants de GameObject)
+Observer pour ma caméra (à préciser)
+Flyweight pour les graphismes (en particulier la tileMap) mais aussi les shapes de base
+Facade pour la création des maps (Encapsule en une ligne un fonctionnement très complexe)
+
+Points attendus :
+Forces - 2
+Collision - 3 (pas 2, mes collisions sont très complètes)
+Moteur de tuiles - 5
+Animation avec spritesheet - 3
+Camera - 3
+Parallax - 3
+Raycast - ? (Le prof en avait parlé)
+ECS - ? (C'est une technique très commune aux jeux vidéos)
+
+Minimum - 19

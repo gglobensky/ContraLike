@@ -466,6 +466,39 @@ static class CollisionHelper { //<>//
     return false;
   }
   
+  static CollisionInfo getPolyPolyCollisionPoint(ICollidable collider, ICollidable against) {
+     PVector[] vertices = collider.getVertices();
+     int len = vertices.length;
+
+     for (int i = 0; i < len; i++) {
+      int next = i + 1;
+      if (next == len)
+        next = 0;
+        
+       PVector[] collisionLine = linePolyCollisionLine(vertices[i], vertices[next], against.getVertices());
+       if (collisionLine != null){
+         PVector collisionPoint = lineLineIntersection(vertices[i], vertices[next], collisionLine[0], collisionLine[1]);
+         return new CollisionInfo(collisionPoint, new PVector(0, 1));
+       }
+     }
+     return null;
+  }
+  
+  static PVector[] linePolyCollisionLine(PVector lineStart, PVector lineEnd, PVector[] vertex) {
+    int len = vertex.length;
+
+    for (int i = 0; i < len; i++) {
+      int next = i + 1;
+      if (next == len)
+        next = 0;
+      
+      PVector[] results = { vertex[i], vertex[next] };
+      if (lineLineCollision(lineStart, lineEnd, vertex[i], vertex[next]))
+        return results;
+    }
+    return null;
+  }
+  
   static CollisionInfo squareSquareCollision(ICollidable collider, ICollidable other) {
     //HOW WILL IT HANDLE WHEN SQUARE IS INSIDE ANOTHER?
      PVector colVel = collider.getVelocity();
@@ -572,7 +605,7 @@ static class CollisionHelper { //<>//
     //return null;
   }
   
-  static boolean lineLineCollision(PVector firstLineStart, PVector firstLineEnd, PVector secondLineStart, PVector secondLineEnd) {
+static boolean lineLineCollision(PVector firstLineStart, PVector firstLineEnd, PVector secondLineStart, PVector secondLineEnd) {
 
     // calculate the distance to intersection point
     float uA = ((secondLineEnd.x - secondLineStart.x) * (firstLineStart.y - secondLineStart.y) - (secondLineEnd.y - secondLineStart.y) * (firstLineStart.x - secondLineStart.x)) / ((secondLineEnd.y - secondLineStart.y) * (firstLineEnd.x - firstLineStart.x) - (secondLineEnd.x - secondLineStart.x) * (firstLineEnd.y - firstLineStart.y));
@@ -585,3 +618,31 @@ static class CollisionHelper { //<>//
     return false;
   }
 }
+
+static PVector lineLineIntersection(PVector A, PVector B, PVector C, PVector D) 
+{ 
+    // Line AB represented as a1x + b1y = c1 
+    double a1 = B.y - A.y; 
+    double b1 = A.x - B.x; 
+    double c1 = a1*(A.x) + b1*(A.y); 
+   
+    // Line CD represented as a2x + b2y = c2 
+    double a2 = D.y - C.y; 
+    double b2 = C.x - D.x; 
+    double c2 = a2*(C.x)+ b2*(C.y); 
+   
+    double determinant = a1*b2 - a2*b1; 
+   
+    if (determinant == 0) 
+    { 
+        // The lines are parallel. This is simplified 
+        // by returning a pair of FLT_MAX 
+        return new PVector(Float.MAX_VALUE, Float.MAX_VALUE); 
+    } 
+    else
+    { 
+        double x = (b2*c1 - b1*c2)/determinant; 
+        double y = (a1*c2 - a2*c1)/determinant; 
+        return new PVector((float)x, (float)y); 
+    } 
+} 

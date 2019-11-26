@@ -112,16 +112,18 @@ class SquareCollider extends Collider{
    } else if (against.getColliderType() == ColliderType.TRIANGLE){
       PVector position = getPosition();
       
-      CollisionInfo collisionInfo = CollisionHelper.getPolyCircleIntersection(against, this);
+      CollisionInfo collisionInfo = CollisionHelper.getPolyPolyCollisionPoint(against, this);
       if (collisionInfo != null){
+        if (against.isSolid())
+          collidedAgainstSolid = true;
         isHit = true;
-        
         against.setCollided(true);
         currentCollisionInfo.collisionPoint = collisionInfo.collisionPoint;
         currentCollisionInfo.surfaceNormal = collisionInfo.surfaceNormal;
-        //println(currentCollisionInfo.surfaceNormal);
+
         GameEngine.addCollision(this, against, collisionInfo);
         collidedWith.put(against, collisionInfo);
+        against.addCollidedWith(this, collisionInfo);
       }
 
       return;

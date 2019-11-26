@@ -20,6 +20,14 @@ class AnimatedSprite extends Graphical{
   }*/
  }
  
+ public int getCurrentFrame(){
+    return animations.get(currentAction).getCurrentFrame();
+ }
+ 
+ public void setCurrentFrame(int _currentFrame){
+    animations.get(currentAction).setCurrentFrame(_currentFrame);
+ }
+ 
  public void flipX(boolean _flipX){
    if (flipX != _flipX){
      if (flipX){
@@ -84,10 +92,12 @@ class SpriteAnimation{
     frames = _frames;
     totalFrames = _totalFrames;
     duration = _duration;
+    
     if (duration < 0){
       println("Duration has to be superior than 0, duration set to 1sec");
       duration = 1;
     }
+    
     maxFrameCount = duration * 1000;
     frameDuration = maxFrameCount / totalFrames;
     PVector initialSize = sprite.gameObject.transform.size.get();
@@ -100,6 +110,7 @@ class SpriteAnimation{
       frames.get(i).resize((int)initialSize.x, (int)initialSize.y);
      }
     }
+    
   }
   
   /*public void setScale(PVector _scale){
@@ -108,6 +119,14 @@ class SpriteAnimation{
      }
   }*/
 
+  public int getCurrentFrame(){
+    return currentFrame; 
+  }
+  
+  public void setCurrentFrame(int _currentFrame){
+    currentFrame = _currentFrame;
+  }
+  
   void display(Camera camera){
     if (sprite.isPlaying)
       currentFrame = (int)(Time.getElapsedTime() / frameDuration) % totalFrames;
@@ -117,7 +136,7 @@ class SpriteAnimation{
     scale(sprite.orientation.x, sprite.orientation.y);
     
     float xPos = sprite.orientation.x * (sprite.gameObject.transform.position().x - camera.getPosition().x + sprite.relativePos.x);
-    float yOffset = sprite.gameObject.transform.size.y / 2 * sprite.orientation.y;
+    float yOffset = sprite.gameObject.transform.size.y / 2 * sprite.orientation.y + sprite.relativePos.y;
     xPos += sprite.gameObject.transform.size.x / 2 * sprite.orientation.x;
     /*if (sprite.orientation.x < 0)
       xPos -= sprite.gameObject.transform.size.x;*/

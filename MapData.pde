@@ -18,7 +18,7 @@ class MapData{
     MapData(String mapName){
       switch (mapName){
        case "Level 1" :  tileSetName = "Jungle_terrainwater.png";
-       layers = 2;
+       layers = 3;
        xLength = 200;
        yLength = 100;
        tileWidth = tileHeight = 32;
@@ -31,7 +31,7 @@ class MapData{
       for (int i = 0; i < layers; i++)
         visualValues.add(getMapData("assets/Maps/visuals/" + mapName + "_" + i + ".csv", xLength, yLength));
         
-      colliderValues = visualValues.get(1);
+      colliderValues = getMapData("assets/Maps/colliders/" + mapName + ".csv", xLength, yLength);
 
     }
     
@@ -43,6 +43,16 @@ class MapData{
    }
    
    void loadColliderMap(TileMap tileMap){
+     for (int y = 0; y < yLength; y++){
+       for (int x = 0; x < xLength; x++){
+         int colliderValue = colliderValues[y][x];
+         if (colliderValue > 0)
+           addTileCollider(tileMap.tiles[x][y], tileMap.tileWidth, tileMap.tileHeight, colliderValue);
+       }
+     }
+   }
+   
+   /*void loadColliderMap(TileMap tileMap){
         //Create rectangle colliders, one for each uninterrupted row
        for (int y = 0; y < yLength; y++){
          
@@ -55,7 +65,7 @@ class MapData{
           PVector position = new PVector(x * tileWidth, y * tileHeight);
           int colliderValue = colliderValues[y][x];
           
-          if (colliderValue >= 0){
+          if (colliderValue == 1){
             if (!beginCollider){
               colliderHost = tileMap.tiles[x][y];
               currentColliderType = colliderValue;
@@ -90,15 +100,29 @@ class MapData{
         }
       } 
      
-   }
+   }*/
    
    private void addTileCollider(Tile colliderHost, int currentColliderWidth, int tileHeight, int currentColliderType){
-    TileCollider t;
-    if (currentColliderType != 2)
+    TileCollider t = null;
+    if (currentColliderType == 1)
       t = new SquareTileCollider(colliderHost, currentColliderWidth, tileHeight);
-    else
-      t = new TriangleTileCollider(colliderHost, currentColliderWidth, tileHeight, new PVector(0, tileHeight), new PVector(tileWidth, tileHeight), new PVector(tileWidth, 0));
-    //t.toggleColliderDisplay(camera, 1, true);    
+    else if (currentColliderType == 2){
+      t = new TriangleTileCollider(colliderHost, currentColliderWidth, tileHeight, new PVector(0, 0), new PVector(tileWidth, tileHeight), new PVector(tileWidth, 0));
+    }
+    else if (currentColliderType == 5){
+      t = new TriangleTileCollider(colliderHost, currentColliderWidth, tileHeight, new PVector(0, tileHeight), new PVector(tileWidth, 0), new PVector(0, 0));
+    }
+    else if (currentColliderType == 6){
+      t = new TriangleTileCollider(colliderHost, currentColliderWidth, tileHeight, new PVector(0, 0), new PVector(tileWidth, tileHeight * 0.5f), new PVector(tileWidth, tileHeight));
+      t.setTag("SmoothUpSlope");
+    }
+    else if (currentColliderType == 7){
+      t = new TriangleTileCollider(colliderHost, currentColliderWidth, tileHeight, new PVector(0, tileHeight), new PVector(tileWidth, tileHeight), new PVector(0, tileHeight * 0.5f));
+      t.setTag("SmoothUpSlope");
+    }    
+    
+    /*if (t != null)
+      t.toggleColliderDisplay(camera, 8, true);*/
     
   }
    

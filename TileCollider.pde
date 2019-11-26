@@ -6,7 +6,8 @@ abstract class TileCollider implements IGraphic, ICollidable {
   ColliderType colliderType;
   Map<Camera, Integer> cameras = new HashMap();//Camera, Layer
   boolean isCulled;
- 
+  String tag = "";
+  
   abstract void display(Camera camera);
 
   TileCollider(Tile _tile, int _xSize, int _ySize) {
@@ -22,7 +23,8 @@ abstract class TileCollider implements IGraphic, ICollidable {
   HashMap<ICollidable, PVector> getCollidedWith() { return null; }
   void resolveCollision(ICollidable against){}
   
-  
+  public void setTag(String _tag){ tag = _tag; }
+  public String getTag() { return tag; }
   boolean hasMoved() { return false; }
   boolean isSolid(){ return true; }
   float getRestitutionCoeff() { return tile.restitutionCoeff; }

@@ -21,14 +21,17 @@ static class GameEngine{
       if (doFixedUpdate)
         scripts.get(i).fixedUpdate();
     }
+
  }
  
  static void initScripts(){
+
    int len = scripts.size();
 
     for (int i = 0; i < len; i++){
       scripts.get(i).init();
     }
+ 
  }
  
  static void updateCollisions(){
@@ -130,6 +133,7 @@ static class GameEngine{
    return null;
  }
 }
+
 static class CollisionInfo {
   PVector collisionPoint;
   PVector surfaceNormal;
