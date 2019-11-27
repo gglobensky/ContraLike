@@ -81,7 +81,7 @@ class Camera implements CamSubject {
          graphicsList[layer].remove(iGraphic); 
     }
 
-    public List<IGraphic>[] getGraphicsList(){
+    public static List<IGraphic>[] getGraphicsList(){
        return graphicsList; 
     }
     

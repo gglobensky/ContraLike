@@ -24,7 +24,7 @@ static class Time{
 }
 
 static class InputManager{
-  static private boolean[] inputs = new boolean[138];
+  static private boolean[] inputs = new boolean[360];
   static private int currentKeyPressed = 65535;
   static private int currentKeyReleased = 65535;
   

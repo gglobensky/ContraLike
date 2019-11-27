@@ -120,9 +120,17 @@ class MapData{
       t = new TriangleTileCollider(colliderHost, currentColliderWidth, tileHeight, new PVector(0, tileHeight), new PVector(tileWidth, tileHeight), new PVector(0, tileHeight * 0.5f));
       t.setTag("SmoothUpSlope");
     }    
+    else if (currentColliderType == 8){
+      t = new TriangleTileCollider(colliderHost, currentColliderWidth, tileHeight, new PVector(tileWidth, 0), new PVector(0, tileHeight * 0.5f), new PVector(0, tileHeight));
+      t.setTag("SmoothUpSlope");
+    }
+    else if (currentColliderType == 9){
+      t = new TriangleTileCollider(colliderHost, currentColliderWidth, tileHeight, new PVector(tileWidth, tileHeight), new PVector(0, tileHeight), new PVector(tileWidth, tileHeight * 0.5f));
+      t.setTag("SmoothUpSlope");
+    }    
     
-    /*if (t != null)
-      t.toggleColliderDisplay(camera, 8, true);*/
+    if (t != null)
+      t.toggleColliderDisplay(camera, 8, true);
     
   }
    

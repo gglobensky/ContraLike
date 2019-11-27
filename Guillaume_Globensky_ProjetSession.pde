@@ -52,7 +52,11 @@ void draw () {
     game.fixedUpdate();
     InputManager.resetInputManagerValues();
   }
-
+  
+  if (GameObject.componentsDirty){
+     GameObject.componentsDirty = false;
+     GameEngine.doCleanup();
+  }
 }
 
 

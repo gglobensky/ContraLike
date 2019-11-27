@@ -23,6 +23,35 @@ static class GameEngine{
     }
 
  }
+
+ static void doCleanup(){
+
+   int len = GameObject.expiredComponents.size();
+   for (int i = 0; i < len; i++){
+     Component c = GameObject.expiredComponents.get(i);
+     if (physicsObjects.contains(c)){
+       /*PhysicsObserver po = */physicsObjects.remove(physicsObjects.indexOf(c));
+       //po = null;
+     }
+     if (colliderObjects.contains(c)){
+       /*ICollidable ic = */colliderObjects.remove(colliderObjects.indexOf(c));
+       //ic = null;
+     }
+     if (scripts.contains(c)){
+       /*ScriptComponent sc = */scripts.remove(scripts.indexOf(c));
+       //sc = null;
+     }
+     for (int j = 0; j < 9; j++){
+       if (Camera.getGraphicsList()[j].contains(c)){
+         IGraphic ig = Camera.getGraphicsList()[j].remove(Camera.getGraphicsList()[j].indexOf(c));
+         //Camera.Camera.getGraphicsList()[j].remove(ig);
+       }
+     }
+     GameObject.expiredComponents.remove(GameObject.expiredComponents.indexOf(c));
+     c = null;
+   }
+ 
+ }
  
  static void initScripts(){
 

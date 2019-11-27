@@ -59,7 +59,7 @@ public class Game{
     //Add or remove colliders from display list for debug purposes
     //c.toggleColliderDisplay(camera, 1, true);
 
-    PVector camPos = PVector.sub(player.transform.position(), new PVector(width / 2, height / 2));
+    PVector camPos = PVector.sub(player.transform.getPosition(), new PVector(width / 2, height / 2));
     camera.setPosition(camPos.x, camPos.y);
     camera.setFocus(player.transform, new PVector(width / 2, height / 2));
     camera.setCameraLimits(levelLowerLimit, levelUpperLimit);

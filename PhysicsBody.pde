@@ -6,6 +6,7 @@ interface PhysicsObserver{
 class PhysicsBody extends Component implements PhysicsObserver{
   boolean isEnabled = true;
   boolean isStable = false;
+  boolean isInAllowedPos = true;
   private PVector velocity;
   PVector frameVelocity = PVector.zero();
   PVector allowedPos = PVector.zero();
@@ -20,6 +21,7 @@ class PhysicsBody extends Component implements PhysicsObserver{
   boolean elasticCollided = false;
   boolean applyGravity = true;
   boolean hasCollided = false;
+  private List<CollisionInfo> frameCollisions = new ArrayList();
   
   PhysicsBody (GameObject _gameObject) {
     super(_gameObject, PhysicsBody.class);
@@ -88,7 +90,8 @@ class PhysicsBody extends Component implements PhysicsObserver{
         elasticCollided = false;
       
     }
-
+    
+    frameCollisions.clear();
   }
 
   void applyGravity(){
@@ -98,17 +101,28 @@ class PhysicsBody extends Component implements PhysicsObserver{
    if (applyGravity)
      gravity = new PVector (0, GameEngine.gravityForce * mass);
 
-       if (collider != null && collider.isSolid && collider.collidedAgainstSolid){
-         gameObject.transform.setPosition(allowedPos);
-         PVector t = velocity.get();
-         t.mult(-1);
-   
-         if (t.sqrMag() > 0.1f){
-           applyForce(t);
-           /*if (velocity.x == -acceleration.x && velocity.y == -acceleration.y){
-             println("Stuck");
-             applyForce(new PVector(0, -0.05f));
-           }*/
+       if (collider.isSolid && collider.collidedAgainstSolid){
+         if (isInAllowedPos)
+           gameObject.transform.setPosition(allowedPos);
+           
+         PVector speed = velocity.get();
+         
+         float speedValue = speed.sqrMag();
+
+         if (speedValue > 0.1f){
+
+           boolean moving = PVector.sub(gameObject.transform.getPosition(), gameObject.transform.getPreviousPosition()).sqrMag() != 0;
+           
+           if (!moving || !isInAllowedPos){
+             isInAllowedPos = false;
+             PVector push = PVector.sub(gameObject.transform.getPosition(), frameCollisions.get(0).collisionPoint);
+             push.normalize();
+             //println(push);
+             applyForce(push);
+           } else {
+             speed.mult(-1);
+             applyForce(speed);
+           }
            //Will have to test if applyForce(gravity) causes problem with complex collisions
            //applyForce(gravity);
          }
@@ -118,6 +132,7 @@ class PhysicsBody extends Component implements PhysicsObserver{
        }else if (!collider.collidedAgainstSolid){
          applyForce(gravity);
          allowedPos = gameObject.transform.getPosition();
+         isInAllowedPos = true;
        }
 
   }
@@ -146,6 +161,7 @@ class PhysicsBody extends Component implements PhysicsObserver{
           
           frameVelocity.add(velocities[0]);
           collisionCount++;
+          frameCollisions.add(collisionInfo);
     //}
   }
   
@@ -159,6 +175,7 @@ class PhysicsBody extends Component implements PhysicsObserver{
           
     frameVelocity.add(_velocity);
     collisionCount++;
+    frameCollisions.add(collisionInfo);
   }
   
 }

@@ -8,7 +8,7 @@ class Sprite extends Graphical{
   }
   
   void display(Camera camera){
-     PVector currentPos = PVector.add(gameObject.transform.position(), relativePos);
+     PVector currentPos = PVector.add(gameObject.transform.getPosition(), relativePos);
      image(texture, currentPos.x - drawPos.x, currentPos.y - drawPos.y); 
   }
 }

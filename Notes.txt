@@ -12,7 +12,7 @@ Moteur de tuiles - 5
 Animation avec spritesheet - 3
 Camera - 3
 Parallax - 3
-Raycast - ? (Le prof en avait parlé)
+Raycast - 1 (Le prof en avait parlé)
 ECS - ? (C'est une technique très commune aux jeux vidéos)
 
-Minimum - 19
+Minimum - 20

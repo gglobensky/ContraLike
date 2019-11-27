@@ -135,13 +135,13 @@ class SpriteAnimation{
     imageMode(CENTER);
     scale(sprite.orientation.x, sprite.orientation.y);
     
-    float xPos = sprite.orientation.x * (sprite.gameObject.transform.position().x - camera.getPosition().x + sprite.relativePos.x);
+    float xPos = sprite.orientation.x * (sprite.gameObject.transform.getPosition().x - camera.getPosition().x + sprite.relativePos.x);
     float yOffset = sprite.gameObject.transform.size.y / 2 * sprite.orientation.y + sprite.relativePos.y;
     xPos += sprite.gameObject.transform.size.x / 2 * sprite.orientation.x;
     /*if (sprite.orientation.x < 0)
       xPos -= sprite.gameObject.transform.size.x;*/
       
-    image(frames.get(currentFrame), xPos, sprite.gameObject.transform.position().y - camera.getPosition().y + yOffset, sprite.gameObject.transform.size.x * sprite.relativeScale.x, sprite.gameObject.transform.size.y * sprite.relativeScale.y);
+    image(frames.get(currentFrame), xPos, sprite.gameObject.transform.getPosition().y - camera.getPosition().y + yOffset, sprite.gameObject.transform.size.x * sprite.relativeScale.x, sprite.gameObject.transform.size.y * sprite.relativeScale.y);
     popMatrix();
     imageMode(CORNER);
     if (frameCounter > maxFrameCount)

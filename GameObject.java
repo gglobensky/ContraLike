@@ -1,5 +1,5 @@
 import java.util.*;
-
+import processing.core.PApplet;
 
 abstract class Component<T>
 {
@@ -21,6 +21,11 @@ abstract class Component<T>
 
 public class GameObject
 {
+  
+  static List<Component> expiredComponents = new ArrayList();
+  static boolean componentsDirty = false;
+
+
   boolean isEnabled = true;
   Transform transform;
   static int counter = 1;
@@ -55,6 +60,18 @@ public class GameObject
       }
     }
     
+    <T extends Component> void removeComponent(Component c){
+      if (components.containsKey(c.getType())){
+        
+        expiredComponents.add(c);
+        
+        componentsDirty = true;
+        
+      } else {
+        System.out.println("Component not found, cannot remove"); 
+      }
+    }
+    
     GameObject(){
 
     components = new HashMap<>();
@@ -75,13 +92,14 @@ class Transform extends Component{
  PVector right = new PVector(1, 0);
  PVector size = new PVector(1, 1);
  protected float rotation = 0;
-     
+ private PVector previousPosition;
  private PVector position;
  PVector scale;
 
   Transform(GameObject _gameObject, PVector _position, PVector _size){
     super(_gameObject, Transform.class);
     position = _position;
+    previousPosition = position;
     scale = new PVector(1, 1);
   }
   
@@ -89,14 +107,17 @@ class Transform extends Component{
     return position.get(); 
   }
   
-  public PVector position(){
+  /*public PVector position(){
     return position; 
-  }
+  }*/
   
   public void setPosition(PVector _position){
+    previousPosition = position;
     position = _position;
     
   }
+  
+  public PVector getPreviousPosition(){ return previousPosition; }
   
   public PVector rotateVector(float _rad, PVector worldAxis){
 
