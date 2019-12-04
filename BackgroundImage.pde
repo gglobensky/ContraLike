@@ -68,13 +68,7 @@ class BackgroundImage implements IGraphic, ICanParallax{
   }
   
   public void checkCulling(Camera camera){
-     /*PVector drawPos = getDrawPosition(camera);
-     PVector currentPos = gameObject.transform.getPosition();
-     currentPos.add(relativePos);
-     PVector currentSize = gameObject.transform.size.get();
-     currentSize.x *= relativeScale.x;
-     currentSize.y *= relativeScale.y;
-     isCulled = camera.isInFrame(currentPos, currentSize, drawPos);*/
+
    }
   
   public void setDrawPosition(Camera camera){
@@ -87,7 +81,7 @@ class BackgroundImage implements IGraphic, ICanParallax{
     boolean hasFocusPoint = camera.getFocusPoint() != null;
     //System.out.println(hasFocusPoint);
     if (hasFocusPoint){
-      PVector focusPosition = camera.getFocusPoint().getPosition();
+      PVector focusPosition = camera.getPosition();
       PVector focusOffset = camera.getFocusOffset();
   
       if (canXParallax)

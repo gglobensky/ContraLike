@@ -117,7 +117,6 @@ class Camera implements CamSubject {
         position = focusPoint.getPosition();
         if (upperLimit != null && lowerLimit != null){
           position.x = Math.min(Math.max(lowerLimit.x, position.x), upperLimit.x);
-          //System.out.println(position.y);
           position.y = Math.min(Math.max(lowerLimit.y, position.y), upperLimit.y);
           notify(graphicsList, parallaxObjects);
         }

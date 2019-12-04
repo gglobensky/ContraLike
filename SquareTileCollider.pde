@@ -35,13 +35,7 @@ class SquareTileCollider extends TileCollider{
       stroke (0);
       fill (xSize, xSize, xSize, 255);
       shapeMode(CORNER);
-      //PShape t = debugShape;
-      /*t.beginShape();
-      t.vertex(0, ySize);
-      t.vertex(xSize, ySize);
-      t.vertex(xSize, 0);
-      t.vertex(0, 0);
-      t.endShape();*/
+
       shape(debugShape, tile.startPosition.x - camera.getPosition().x, tile.startPosition.y - camera.getPosition().y, xSize, ySize);
  }
   

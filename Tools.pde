@@ -28,9 +28,8 @@ static class InputManager{
   static private int currentKeyPressed = 65535;
   static private int currentKeyReleased = 65535;
   
-  /*UPPERCASE AND LOWERCASE ARE THE SAME FOR THIS*/
-  
-  
+  ///UPPERCASE AND LOWERCASE ARE THE SAME FOR INPUTS
+
   static void checkInputs(Character input, int kCode){//Call it in KeyPressed of main program
     if (input != CODED){
        if (input >= 65 && input <= 90)
@@ -400,7 +399,7 @@ static class Helper{
    }
    
    static PVector solveTwoEquationSystem(float a, float b, float c, float d, float e, float f){
-     //ax + by = e // cx + dy = f
+     ///ax + by = e // cx + dy = f
      Vector<Vector<Float>>  matrix= new Vector<Vector<Float>>();
      
      Vector<Float> row = new Vector();

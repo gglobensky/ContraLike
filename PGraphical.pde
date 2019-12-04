@@ -60,39 +60,19 @@ public class PGraphical extends Graphical{
   void setRotation(float _relativeRotation) {
    relativeAngle = _relativeRotation;
  }
- 
- //USE FLY WEIGHT AND SINGLETON
+
   PShape createBasicShape(Shape shape){
    PShape createdShape = null;
    
    switch (shape){
-    case ELLIPSE :
-      createdShape = createShape();
-      createdShape.beginShape();
-      for (float a = 0; a < TWO_PI; a += 0.1) {
-        createdShape.vertex(cos(a)*100, sin(a)*100);
-      }
-      createdShape.endShape();
-    return createdShape;
+    case ELLIPSE :   
+    return basicShapes.get(Shape.ELLIPSE);
     
-    case RECTANGLE :
-       createdShape = createShape();
-       createdShape.beginShape(QUADS);
-       createdShape.vertex(0, 0);
-       createdShape.vertex(0, 20);
-       createdShape.vertex(20, 20);
-       createdShape.vertex(20, 0);
-       createdShape.endShape();
-    return createdShape;
+    case RECTANGLE : 
+    return basicShapes.get(Shape.RECTANGLE);
     
     case TRIANGLE :
-    createdShape = createShape();
-       createdShape.beginShape(TRIANGLES);
-       createdShape.vertex(0, 0);
-       createdShape.vertex(10, 20);
-       createdShape.vertex(20, 0);
-       createdShape.endShape();
-    return createdShape;
+    return basicShapes.get(Shape.TRIANGLE);
    }
    
    return null;
@@ -117,28 +97,27 @@ public class PGraphical extends Graphical{
    relativeScale = new PVector(1, 1);
    relativePos = PVector.zero();
  }
- 
- //Display is not relative to the camera
+
  void display(Camera camera){
-   //if (isCulled()){
+
      shapeMode(CENTER);
      float sx = gameObject.transform.size.x;
      float sy = gameObject.transform.size.y;
     float rx = gameObject.transform.getPosition().x + sx / 2f + camera.getPosition().x;//TEST
     float ry = gameObject.transform.getPosition().y + sy / 2f + camera.getPosition().y;
      pushMatrix();
-    // Go to the point around which the shape must rotate
+    /// Go to the point around which the shape must rotate
     translate(rx, ry);
-    // Rotate the coordinate system
+    /// Rotate the coordinate system
     rotate(gameObject.transform.rotation + relativeAngle);
     pushMatrix();
-    // Translate a bit to center the shape on a given point
+    /// Translate a bit to center the shape on a given point
     translate(0, 0);
-    // Draw the shape
+    /// Draw the shape
     scale(relativeScale);
     shape(myShape, 0, 0, sx, sy);
     popMatrix();
-   //}
+
  }
   
 }

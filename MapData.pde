@@ -52,56 +52,6 @@ class MapData{
      }
    }
    
-   /*void loadColliderMap(TileMap tileMap){
-        //Create rectangle colliders, one for each uninterrupted row
-       for (int y = 0; y < yLength; y++){
-         
-         boolean beginCollider = false;
-         int currentColliderType = -1;
-         int currentColliderWidth = 0;
-         Tile colliderHost = null;
-         
-        for (int x = 0; x < xLength; x++){
-          PVector position = new PVector(x * tileWidth, y * tileHeight);
-          int colliderValue = colliderValues[y][x];
-          
-          if (colliderValue == 1){
-            if (!beginCollider){
-              colliderHost = tileMap.tiles[x][y];
-              currentColliderType = colliderValue;
-            }
-            beginCollider =  true;
-            currentColliderWidth += tileWidth;
-            if (currentColliderType == 2){
-              addTileCollider(colliderHost, currentColliderWidth, tileHeight, currentColliderType);
-              beginCollider = false;
-              currentColliderWidth = 0;
-              colliderHost = null;
-              currentColliderType = -1;
-            }
-          }
-          else
-          {
-            if (beginCollider){
-              addTileCollider(colliderHost, currentColliderWidth, tileHeight, currentColliderType);
-              beginCollider = false;
-              currentColliderWidth = 0;
-              colliderHost = null;
-              currentColliderType = -1;
-            }
-          }
-        }
-        if (beginCollider){
-              addTileCollider(colliderHost, currentColliderWidth, tileHeight, currentColliderType);
-              beginCollider = false;
-              currentColliderWidth = 0;
-              colliderHost = null;
-              currentColliderType = -1;
-        }
-      } 
-     
-   }*/
-   
    private void addTileCollider(Tile colliderHost, int currentColliderWidth, int tileHeight, int currentColliderType){
     TileCollider t = null;
     if (currentColliderType == 1)
@@ -129,8 +79,8 @@ class MapData{
       t.setTag("SmoothUpSlope");
     }    
     
-    if (t != null)
-      t.toggleColliderDisplay(camera, 8, true);
+    ///if (t != null)
+      ///t.toggleColliderDisplay(camera, 8, true);
     
   }
    
@@ -157,13 +107,3 @@ class MapData{
    
     
 }
-/*class MapManager{
-  HashMap<String, MapData> maps = new HashMap();
-  
-  MapData getMapData(String mapName){
-    if (!maps.containsKey(mapName))
-      maps.put(mapName, new MapData(mapName));
-    return maps.get(mapName);
-  }
-  
-}*/

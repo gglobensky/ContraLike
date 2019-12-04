@@ -106,11 +106,7 @@ class Transform extends Component{
   public PVector getPosition(){
     return position.get(); 
   }
-  
-  /*public PVector position(){
-    return position; 
-  }*/
-  
+
   public void setPosition(PVector _position){
     previousPosition = position;
     position = _position;

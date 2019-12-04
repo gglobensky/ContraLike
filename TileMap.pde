@@ -39,7 +39,7 @@ class TileMap implements IGraphic, ICanParallax{
     int xPos = 0;
     int yPos = 0;
     
-    //CREATE A REFERENCE FOR EACH TILE OF THE SHEET
+    ///CREATE A REFERENCE FOR EACH TILE OF THE SHEET
     for (int y = 0; y < sourceYQty; y++){
       for (int i = 0; i < sourceXQty; i++){
         textures.add(sourceImage.get(xPos + sourceXMargin, yPos + sourceYMargin, sourceWidth - 2 * sourceXMargin, sourceHeight - 2 * sourceYMargin));
@@ -61,7 +61,7 @@ class TileMap implements IGraphic, ICanParallax{
     }
     
     _camera.addToGraphicsList(this, _layer);
-    //Manually attach graphics to other cameras
+    ///Manually attach graphics to other cameras
     _camera.addToParallaxObjects(this);
   }
   
@@ -73,7 +73,6 @@ class TileMap implements IGraphic, ICanParallax{
    }
 
   public void attachCamera(Camera camera, int layer){
-   //if (!cameras.containsKey(camera))
     cameras.put(camera, layer);
   }
   
@@ -93,7 +92,6 @@ class TileMap implements IGraphic, ICanParallax{
   }
 
  void display(Camera _camera){
-   //currentPosition = getDrawPosition(camera);
    showTiles(_camera);
  }
    
@@ -109,7 +107,6 @@ class TileMap implements IGraphic, ICanParallax{
     float y = camPos.y;
     
     boolean hasFocusPoint = camera.getFocusPoint() != null;
-    //System.out.println(hasFocusPoint);
     if (hasFocusPoint){
       PVector focusPosition = camera.getFocusPoint().getPosition();
       PVector focusOffset = camera.getFocusOffset();
@@ -121,8 +118,7 @@ class TileMap implements IGraphic, ICanParallax{
       if (canYParallax)
         y = camPos.y + (focusPosition.y - focusOffset.y) * parallaxCoeff.y;
       }
-    //System.out.println(camera.getPosition() + " " + new PVector(x, y));
-    
+
       drawPos = new PVector(x, y);
   }
  

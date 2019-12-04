@@ -15,7 +15,6 @@ abstract class TileCollider implements IGraphic, ICollidable {
     tile = _tile;
     xSize = _xSize;
     ySize = _ySize;
-    //colliders.add(this);
   }
   
   PhysicsBody getPhysicsBody() { return null; }
@@ -36,7 +35,6 @@ abstract class TileCollider implements IGraphic, ICollidable {
   
   
   public void attachCamera(Camera camera, int layer) {
-    //if (cameras.get(camera) != null)
     cameras.put(camera, layer);
   }
 

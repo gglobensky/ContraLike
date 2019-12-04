@@ -9,8 +9,7 @@ class PVector {
   
   public static PVector rotateVector(float _rad, PVector _direction){
     PVector direction = _direction.get();
-    //float _length = direction.mag();
-    
+
     double cs = Math.cos(_rad);
     double sn = Math.sin(_rad);
     
@@ -105,8 +104,8 @@ class PVector {
   }
   
  static PVector getIntersectionPoint(PVector center1, float radius1, PVector center2, float radius2){
-   // Trouver le point de collision
-    // sans trigo
+   /// Trouver le point de collision
+    /// sans trigo
     float collisionPointX =
         ((center1.x * radius2) + (center2.x * radius1))
         / (radius1 + radius2);
@@ -114,13 +113,13 @@ class PVector {
     float collisionPointY =
         ((center1.y * radius2) + (center2.y * radius1))
         / (radius1 + radius2);
-        //System.out.println(new PVector(collisionPointX, collisionPointY));
+
     return new PVector(collisionPointX, collisionPointY);
     
 } 
   
   static PVector getIntersectionPoint(PVector segmentStart, PVector segmentEnd, PVector center, float radius){
-  // get length of the line
+  /// get length of the line
   float len = PVector.distance(segmentStart, segmentEnd);
   float cx = center.x;
   float cy = center.y;
@@ -130,14 +129,14 @@ class PVector {
   float x2 = segmentEnd.x;
   float y2 = segmentEnd.y;
   
-  // get dot product of the line and circle
+  /// get dot product of the line and circle
   float dot = ( ((cx-x1)*(x2-x1)) + ((cy-y1)*(y2-y1)) ) / (float)Math.pow(len,2);
 
-  // find the closest point on the line
+  /// find the closest point on the line
   float closestX = x1 + (dot * (x2-x1));
   float closestY = y1 + (dot * (y2-y1));
 
-  // get distance to closest point
+  /// get distance to closest point
 
   float distance = PVector.distance(new PVector(closestX, closestY), center);
 
@@ -158,8 +157,7 @@ class PVector {
     return distance;
   }
   
-  // Limiter la magnitude d'un vecteur
-  // Par exemple la vitesse
+  /// Limiter la magnitude d'un vecteur
   void limit (float max) {
     if (this.sqrMag() > max * max) {
       this.normalize();

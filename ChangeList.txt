@@ -1,7 +1,0 @@
-Corrected bugs in input manager, could crash because exceeded array
-Corrected bugs in slope walking
-Corrected bugs in swimming
-Corrected wall jump bug
-Corrected wall corner to player corner jerk bug
-Improved physicsBody's capacity of keeping two colliders not inside each other (when manually moving it)
-Added removeComponent functionality to GameObject and bound x to delete the player sprite

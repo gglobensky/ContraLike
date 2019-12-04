@@ -9,8 +9,8 @@ class Raycast implements IGraphic{
      direction = _direction;
    }
    
-   //IDEALLY, A FLAG SHOULD BE SET TO TELL RAYCAST ALREADY HAS BEEN CALCULATED FOR THIS FRAME, GAMEENGINE SHOULD THEN MANAGE IT.
-   //WITH THE CURRENT CONFIG, I COULD CHECK THE SAME RAYCAST N TIMES BY FRAME WHICH IS AWFUL.
+   ///IDEALLY, A FLAG SHOULD BE SET TO TELL RAYCAST ALREADY HAS BEEN CALCULATED FOR THIS FRAME, GAMEENGINE SHOULD THEN MANAGE IT.
+   ///WITH THE CURRENT CONFIG, I COULD CHECK THE SAME RAYCAST N TIMES BY FRAME WHICH IS AWFUL.
    String raycastHit(){
      String againstTag = "";
      int len = GameEngine.colliderObjects.size();
@@ -26,24 +26,23 @@ class Raycast implements IGraphic{
      
      boolean xEndInside = false;
      boolean xOriginInside = (origin.x >= againstPos.x && origin.x < againstPos.x + againstSize.x);
-     //if (!xOriginInside)
-       xEndInside = (lineEnd.x >= againstPos.x && lineEnd.x < againstPos.x + againstSize.x);
+
+     xEndInside = (lineEnd.x >= againstPos.x && lineEnd.x < againstPos.x + againstSize.x);
 
      boolean yEndInside = false;
      boolean yOriginInside = (origin.y >= againstPos.y && origin.y < againstPos.y + againstSize.y);
-     //if (!yOriginInside)
-       yEndInside = (lineEnd.y >= againstPos.y && lineEnd.y < againstPos.y + againstSize.y);
-     
-     
+
+     yEndInside = (lineEnd.y >= againstPos.y && lineEnd.y < againstPos.y + againstSize.y);
+         
      boolean xThrough = (origin.x <= againstPos.x && lineEnd.x >= againstPos.x + againstSize.x);
      boolean yThrough = (origin.y <= againstPos.y && lineEnd.y >= againstPos.y + againstSize.y);
+
+     boolean couldHit = 
+       ((xOriginInside && (yOriginInside || yEndInside || yThrough)) || (xEndInside && (yOriginInside || yEndInside || yThrough)) || 
+       (yOriginInside && (xOriginInside || xEndInside || xThrough)) || (yEndInside && (xOriginInside || xEndInside || xThrough))
+       || (xThrough && yThrough) || (xOriginInside && xEndInside) || (yOriginInside && yEndInside));
      
-     //WILL HAVE TO TEST THOROUGHLY IF OPTIMISATION WORKS...
-     
-     if ((xOriginInside && (yOriginInside || yEndInside || yThrough)) || (xEndInside && (yOriginInside || yEndInside || yThrough)) || 
-     (yOriginInside && (xOriginInside || xEndInside || xThrough)) || (yEndInside && (xOriginInside || xEndInside || xThrough))
-     || (xThrough && yThrough) || (xOriginInside && xEndInside) || (yOriginInside && yEndInside)){
-       
+     if (couldHit){ 
        againstTag = against.getTag();
        
        if (against.getColliderType() == ColliderType.SQUARE){
@@ -92,15 +91,6 @@ class Raycast implements IGraphic{
   void display(Camera camera){
     PVector viewStart = origin.get();
     PVector viewEnd = PVector.add(viewStart, direction);
-     /* stroke (0);
-      //fill (xSize, xSize, xSize, 255);
-      shapeMode(CORNER);
-      PShape t = createShape();
-      t.beginShape();
-      t.vertex(0, 0);
-      t.vertex(direction.x, direction.y);
-      t.endShape();
-      shape(t, viewStart.x - camera.getPosition().x, viewStart.y - camera.getPosition().y);*/
 
     line(viewStart.x - camera.getPosition().x, viewStart.y - camera.getPosition().y, viewEnd.x - camera.getPosition().x, viewEnd.y - camera.getPosition().y);
  }
@@ -133,7 +123,6 @@ class Raycast implements IGraphic{
  }
   
   public void attachCamera(Camera camera, int layer){
-   //if (cameras.get(camera) != null)
     cameras.put(camera, layer);
   }
   

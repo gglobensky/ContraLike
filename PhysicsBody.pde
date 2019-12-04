@@ -117,14 +117,11 @@ class PhysicsBody extends Component implements PhysicsObserver{
              isInAllowedPos = false;
              PVector push = PVector.sub(gameObject.transform.getPosition(), frameCollisions.get(0).collisionPoint);
              push.normalize();
-             //println(push);
              applyForce(push);
            } else {
              speed.mult(-1);
              applyForce(speed);
            }
-           //Will have to test if applyForce(gravity) causes problem with complex collisions
-           //applyForce(gravity);
          }
          else{
            isStable = true;
@@ -150,19 +147,17 @@ class PhysicsBody extends Component implements PhysicsObserver{
   int collisionCount = 0;
   
   void elasticCollision(ICollidable other, CollisionInfo collisionInfo){
-    //if (collider != null && collider.isSolid){
-          PVector[] velocities = CollisionHelper.getElasticResponse(collider, other, collisionInfo);
-          other.setVelocity(velocities[1]);
-          
-          if (velocities[0].sqrMag() > 1f){
-
-            elasticCollided = true;
-          }
-          
-          frameVelocity.add(velocities[0]);
-          collisionCount++;
-          frameCollisions.add(collisionInfo);
-    //}
+    PVector[] velocities = CollisionHelper.getElasticResponse(collider, other, collisionInfo);
+    other.setVelocity(velocities[1]);
+    
+    if (velocities[0].sqrMag() > 1f){
+  
+      elasticCollided = true;
+    }
+    
+    frameVelocity.add(velocities[0]);
+    collisionCount++;
+    frameCollisions.add(collisionInfo);
   }
   
   void worldCollision(ICollidable other, CollisionInfo collisionInfo){

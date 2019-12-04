@@ -5,8 +5,8 @@ interface IGraphic{
   void checkCulling(Camera camera);//Update action from Subject
   boolean isCulled();
   void display(Camera camera);
-  void addToGraphicsList(Camera camera, int _layer);//Attach to Subject's list (So no one forgets to do it)
-  void removeFromGraphicsList(Camera camera, int _layer);//Remove from Subject's list
+  void addToGraphicsList(Camera camera, int _layer);///Attach to Subject's list (So no one forgets to do it)
+  void removeFromGraphicsList(Camera camera, int _layer);///Remove from Subject's list
   void setLayer(Camera camera, int _layer);
 }
 
@@ -14,7 +14,7 @@ interface ICanParallax{
   void setCanXParallax(boolean canParallax);
   void setCanYParallax(boolean canParallax);
   void setDrawPosition(Camera camera);
-  void setParallax(PVector coeff);//This is the point where all layers should be stacked perfectly
+  void setParallax(PVector coeff);///This is the point where all layers should be stacked perfectly
 }
 
 abstract class Graphical<T extends Component<T>> extends Component implements IGraphic, ICanParallax{
@@ -27,7 +27,7 @@ abstract class Graphical<T extends Component<T>> extends Component implements IG
   boolean canXParallax = false;
   boolean canYParallax = false;
   
-  Map<Camera, Integer> cameras = new HashMap<>();//Camera, Layer
+  Map<Camera, Integer> cameras = new HashMap<>();///Camera, Layer
   
   Graphical(GameObject _gameObject, Class<T> _typeParameterClass, int _layer, Camera camera){
     super(_gameObject, _typeParameterClass);
@@ -88,8 +88,7 @@ abstract class Graphical<T extends Component<T>> extends Component implements IG
       if (canYParallax)
         y = camPos.y + (focusPosition.y - focusOffset.y) * parallaxCoeff.y;
       }
-    //System.out.println(camera.getPosition() + " " + new PVector(x, y));
-    
+
       drawPos = new PVector(x, y);
   }
   

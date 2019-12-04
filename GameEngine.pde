@@ -30,21 +30,17 @@ static class GameEngine{
    for (int i = 0; i < len; i++){
      Component c = GameObject.expiredComponents.get(i);
      if (physicsObjects.contains(c)){
-       /*PhysicsObserver po = */physicsObjects.remove(physicsObjects.indexOf(c));
-       //po = null;
+       physicsObjects.remove(physicsObjects.indexOf(c));
      }
      if (colliderObjects.contains(c)){
-       /*ICollidable ic = */colliderObjects.remove(colliderObjects.indexOf(c));
-       //ic = null;
+       colliderObjects.remove(colliderObjects.indexOf(c));
      }
      if (scripts.contains(c)){
-       /*ScriptComponent sc = */scripts.remove(scripts.indexOf(c));
-       //sc = null;
+       scripts.remove(scripts.indexOf(c));
      }
      for (int j = 0; j < 9; j++){
        if (Camera.getGraphicsList()[j].contains(c)){
          IGraphic ig = Camera.getGraphicsList()[j].remove(Camera.getGraphicsList()[j].indexOf(c));
-         //Camera.Camera.getGraphicsList()[j].remove(ig);
        }
      }
      GameObject.expiredComponents.remove(GameObject.expiredComponents.indexOf(c));
@@ -81,12 +77,6 @@ static class GameEngine{
           float yMin = againstPos.y - velocity.y;
           float yMax = againstPos.y + againstSize.y + velocity.y;
           
-          /*float xMin = -10000;
-          float xMax = 10000;
-          
-          float yMin = 0;
-          float yMax = 10000;*/
-          
           PVector currentPos = colliderObjects.get(i).getPosition();
           PVector currentSize = colliderObjects.get(i).getSize();
           
@@ -114,7 +104,6 @@ static class GameEngine{
         _collider.resolveCollision(collidedWith);
       }
     }
-    //println(collisions.size());
     collisions.clear();
  }
  
@@ -152,7 +141,7 @@ static class GameEngine{
    if (!collisions.containsKey(collider))
      collisions.put(collider, new HashMap());
      
-   collisions.get(collider).put(against, collisionInfo);//println(collisions.get(collider).get(against));
+   collisions.get(collider).put(against, collisionInfo);
  }
  
  static CollisionInfo getCollisionInfo(ICollidable collider, ICollidable other){

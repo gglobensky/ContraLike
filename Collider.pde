@@ -60,7 +60,6 @@ abstract class Collider extends Component implements IGraphic, ICollidable{
   
   void addPhysicsBody(PhysicsBody pb){
     physicsBody = pb;
-    //print(pb);
   }
   
   PhysicsBody getPhysicsBody(){
@@ -115,9 +114,7 @@ abstract class Collider extends Component implements IGraphic, ICollidable{
   Collider(GameObject _gameObject, boolean _isSolid){
     super(_gameObject, Collider.class);
     GameEngine.addToColliderList(this);
-    //colliders.add(this);
     isSolid = _isSolid;
-    //addToLists();
   }
    
   void onDestroy(){

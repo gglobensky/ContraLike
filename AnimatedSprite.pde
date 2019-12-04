@@ -14,10 +14,6 @@ class AnimatedSprite extends Graphical{
  
  public void setScale(PVector _scale){
   relativeScale = _scale;
-  /*scale = new PVector(gameObject.transform.size.x * _scale.x, gameObject.transform.size.y * _scale.y);
-  for (SpriteAnimation value : animations.values()) {
-    value.setScale(scale);
-  }*/
  }
  
  public int getCurrentFrame(){
@@ -112,12 +108,6 @@ class SpriteAnimation{
     }
     
   }
-  
-  /*public void setScale(PVector _scale){
-     for (PImage p : frames){
-       p.resize((int)_scale.x, (int)_scale.y); 
-     }
-  }*/
 
   public int getCurrentFrame(){
     return currentFrame; 
@@ -130,7 +120,7 @@ class SpriteAnimation{
   void display(Camera camera){
     if (sprite.isPlaying)
       currentFrame = (int)(Time.getElapsedTime() / frameDuration) % totalFrames;
-    //println((int)(Time.getElapsedTime() / frameDuration) % totalFrames);
+      
     pushMatrix();
     imageMode(CENTER);
     scale(sprite.orientation.x, sprite.orientation.y);
@@ -138,9 +128,7 @@ class SpriteAnimation{
     float xPos = sprite.orientation.x * (sprite.gameObject.transform.getPosition().x - camera.getPosition().x + sprite.relativePos.x);
     float yOffset = sprite.gameObject.transform.size.y / 2 * sprite.orientation.y + sprite.relativePos.y;
     xPos += sprite.gameObject.transform.size.x / 2 * sprite.orientation.x;
-    /*if (sprite.orientation.x < 0)
-      xPos -= sprite.gameObject.transform.size.x;*/
-      
+
     image(frames.get(currentFrame), xPos, sprite.gameObject.transform.getPosition().y - camera.getPosition().y + yOffset, sprite.gameObject.transform.size.x * sprite.relativeScale.x, sprite.gameObject.transform.size.y * sprite.relativeScale.y);
     popMatrix();
     imageMode(CORNER);

@@ -6,7 +6,6 @@ class CircleCollider extends Collider{
   CircleCollider(GameObject _gameObject, float _radius, boolean _isSolid){
     super(_gameObject, _isSolid);
     colliderType = ColliderType.CIRCLE;
-    //colliders.add(this);
     radius = _radius;
   }
   
@@ -92,7 +91,6 @@ class CircleCollider extends Collider{
         against.setCollided(true);
         currentCollisionInfo.collisionPoint = collisionInfo.collisionPoint;
         currentCollisionInfo.surfaceNormal = collisionInfo.surfaceNormal;
-        //println(currentCollisionInfo.surfaceNormal);
         GameEngine.addCollision(this, against, collisionInfo);
         collidedWith.put(against, collisionInfo);
         against.addCollidedWith(this, collisionInfo);

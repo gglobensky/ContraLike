@@ -32,7 +32,6 @@ class SquareCollider extends Collider{
     ySize = gameObject.transform.size.y;
 
     colliderType = ColliderType.SQUARE;
-    //colliders.add(this);
   }
 
   PVector[] getVertices(){
@@ -51,14 +50,6 @@ class SquareCollider extends Collider{
     xSize = _size.x;
     ySize = _size.y;
   }
-  
-  
-  
-  /*public PVector getPosition(){
-   PVector position = gameObject.transform.getPosition();
-   position.add(relativePosition);
-   return position;
-  }*/
   
   void resolveCollision(ICollidable other){
     if (isSolid && physicsBody != null){

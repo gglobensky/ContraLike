@@ -41,7 +41,7 @@ public class Game{
     a.addAnimation("PlayerAimUp.png", "AimUp", 1, 1, 0, 0, 50, 57, 1f);
     tr = player.transform;
     
-    BackgroundImage mountains = new BackgroundImage(new PVector(0, levelUpperLimit.y - 64), "assets\\Maps\\backgrounds\\mountain.png", new PVector(1838, 512), 0, camera, false, false);
+    BackgroundImage mountains = new BackgroundImage(new PVector(0, levelUpperLimit.y), "assets\\Maps\\backgrounds\\mountain.png", new PVector(1838, 512), 0, camera, false, false);
     mountains.setParallax(new PVector(-0.5, 0.1));
     mountains.setCanXParallax(true);
     mountains.setCanYParallax(true);
@@ -56,8 +56,8 @@ public class Game{
     mapData.loadTileMap(2, 2, 24, 24, camera);
     mapData.loadColliderMap(tileMap);
 
-    //Add or remove colliders from display list for debug purposes
-    //c.toggleColliderDisplay(camera, 1, true);
+    ///Add or remove colliders from display list for debug purposes
+    ///c.toggleColliderDisplay(camera, 1, true);
 
     PVector camPos = PVector.sub(player.transform.getPosition(), new PVector(width / 2, height / 2));
     camera.setPosition(camPos.x, camPos.y);
