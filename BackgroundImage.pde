@@ -71,6 +71,8 @@ class BackgroundImage implements IGraphic, ICanParallax{
 
    }
   
+  void manageCulling(Camera camera){}
+  
   public void setDrawPosition(Camera camera){
 
     PVector camPos = camera.getPosition();

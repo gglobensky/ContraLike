@@ -98,7 +98,11 @@ class Raycast implements IGraphic{
  public boolean isCulled(){
     return isCulled; 
  }
-  
+ 
+ public void manageCulling(Camera camera){
+  //if (gameObject.transform.getPosition() != gameObject.transform.getPreviousPosition())
+    checkCulling(camera);
+ }
      
  public void checkCulling(Camera camera){
    PVector startPos;

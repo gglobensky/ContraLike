@@ -76,6 +76,11 @@ abstract class TileCollider implements IGraphic, ICollidable {
   PVector getNormal(){ return null; }
   public void manageCollider(){}
   
+  public void manageCulling(Camera camera){
+    //if (gameObject.transform.getPosition() != gameObject.transform.getPreviousPosition())
+      checkCulling(camera);
+  }
+  
   public void checkCulling(Camera camera) {
     PVector currentPos = tile.startPosition.get();
     currentPos.add(camera.getPosition());

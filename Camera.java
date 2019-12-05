@@ -3,7 +3,8 @@ import java.util.*;
 interface CamSubject{
   void addToGraphicsList(IGraphic iGraphic, int layer);
   void removeFromGraphicsList(IGraphic iGraphic, int layer);
-  void notify(List<IGraphic>[] graphicsList, ArrayList<ICanParallax> parallaxObjects);
+  void notifyObservers();
+  void manageView();
   
   void addToParallaxObjects(ICanParallax obj);
   void removeFromParallaxObjects(ICanParallax obj);
@@ -40,7 +41,7 @@ class Camera implements CamSubject {
     upperLimit = _upperLimit;
   }
   
-  public void notify(List<IGraphic>[] graphicsList, ArrayList<ICanParallax> parallaxObjects){
+  public void notifyObservers(){
 
     for (int i = 0; i < 9; i++){
      int len = graphicsList[i].size();
@@ -101,10 +102,13 @@ class Camera implements CamSubject {
     }
     
     public void setPosition(float x, float y) {
-        position.x = x;    
-        position.y = y;
+      if (x == position.x && y == position.y)
+        return;
+        
+      position.x = x;    
+      position.y = y;
 
-        notify(graphicsList, parallaxObjects);
+      notifyObservers();
     }
     
     void setFocus(Transform _focusPoint, PVector _focusOffset){
@@ -114,19 +118,23 @@ class Camera implements CamSubject {
     
     public void manageView(){
        if (followFocusPoint && focusPoint != null){
-        position = focusPoint.getPosition();
+        PVector followPosition = focusPoint.getPosition();
         if (upperLimit != null && lowerLimit != null){
-          position.x = Math.min(Math.max(lowerLimit.x, position.x), upperLimit.x);
-          position.y = Math.min(Math.max(lowerLimit.y, position.y), upperLimit.y);
-          notify(graphicsList, parallaxObjects);
+
+          float x = Math.min(Math.max(lowerLimit.x, followPosition.x), upperLimit.x);
+          float y = Math.min(Math.max(lowerLimit.y, followPosition.y), upperLimit.y);
+          setPosition(x, y);
         }
         if (focusOffset != null){
          position.sub(focusOffset); 
         }
        }
        for (int i = 0; i < 9; i++){
-        for (IGraphic g : graphicsList[i])
-          g.display(this);
+        for (IGraphic g : graphicsList[i]){
+        g.manageCulling(this);
+          if (!g.isCulled())
+            g.display(this);
+        }
        }
        
     }

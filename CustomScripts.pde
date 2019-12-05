@@ -32,13 +32,13 @@ class PlayerScript extends ScriptComponent{
     collider.restitutionCoeff = 0;
     
     bottomRay = new Raycast(PVector.add(collider.getPosition(), new PVector(0, collider.getSize().y)), new PVector(collider.getSize().x + 6, 0));
-    ///bottomRay.toggleRaycastDisplay(camera, 8, true);
+    //bottomRay.toggleRaycastDisplay(camera, 8, true);
     
     rightRay = new Raycast(PVector.add(collider.getPosition(), new PVector(collider.getSize().x, 0)), new PVector(0, collider.getSize().y));
-    ///rightRay.toggleRaycastDisplay(camera, 8, true);
+    //rightRay.toggleRaycastDisplay(camera, 8, true);
     
     leftRay = new Raycast(PVector.add(gameObject.transform.getPosition(), new PVector(gameObject.transform.size.x, 0)), new PVector(0, gameObject.transform.size.y));
-    ///leftRay.toggleRaycastDisplay(camera, 8, true);
+    //leftRay.toggleRaycastDisplay(camera, 8, true);
     
     actions.put("MoveRight", "Right");
     actions.put("MoveLeft", "Left");

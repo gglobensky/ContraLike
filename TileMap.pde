@@ -67,6 +67,7 @@ class TileMap implements IGraphic, ICanParallax{
   
   
   public void checkCulling(Camera camera){}
+  public void manageCulling(Camera camera){}
    
    public boolean isCulled(){
     return false; 

@@ -94,7 +94,7 @@ abstract class Collider extends Component implements IGraphic, ICollidable{
   boolean hasCollided(){ return isHit; }
   
    public boolean isCulled(){
-    return isCulled; 
+    return false;//isCulled; 
    }
   
    public void toggleColliderDisplay(Camera camera, int layer, boolean toggleOn){
@@ -103,6 +103,11 @@ abstract class Collider extends Component implements IGraphic, ICollidable{
      else
        removeFromGraphicsList(camera, layer);
    }
+    
+  public void manageCulling(Camera camera){
+    /*if (gameObject.transform.getPosition() != gameObject.transform.getPreviousPosition())
+      checkCulling(camera);*/
+  }
     
    public void checkCulling(Camera camera){
      PVector currentPos = gameObject.transform.getPosition();

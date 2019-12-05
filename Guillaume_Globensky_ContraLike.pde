@@ -46,6 +46,7 @@ void draw () {
      GameObject.componentsDirty = false;
      GameEngine.doCleanup();
   }
+  println(frameRate);
 }
 
 

@@ -32,7 +32,7 @@ public class GameObject
   String name;
   String tag;
   
-  Map<Class<Component>, List<Component>> components;
+  private Map<Class<Component>, List<Component>> components;
   
     public <T extends Component> T getComponent(Class<T> c){
       return (T)components.get(c).get(0); 
@@ -106,11 +106,10 @@ class Transform extends Component{
   public PVector getPosition(){
     return position.get(); 
   }
-
+  
   public void setPosition(PVector _position){
     previousPosition = position;
     position = _position;
-    
   }
   
   public PVector getPreviousPosition(){ return previousPosition; }

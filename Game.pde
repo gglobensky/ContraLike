@@ -56,8 +56,8 @@ public class Game{
     mapData.loadTileMap(2, 2, 24, 24, camera);
     mapData.loadColliderMap(tileMap);
 
-    ///Add or remove colliders from display list for debug purposes
-    ///c.toggleColliderDisplay(camera, 1, true);
+    //Add or remove colliders from display list for debug purposes
+    //c.toggleColliderDisplay(camera, 1, true);
 
     PVector camPos = PVector.sub(player.transform.getPosition(), new PVector(width / 2, height / 2));
     camera.setPosition(camPos.x, camPos.y);

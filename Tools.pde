@@ -354,10 +354,6 @@ static class InputManager{
     currentKeyReleased = 65535;
   }
 }
-class Screen{
-    final PVector position = new PVector(0, 0);
-    final PVector size = new PVector((float)width, (float)height);
-}
 
 static class Helper{
    static boolean inRange(float value, int min, int max) {

@@ -8,6 +8,7 @@ interface IGraphic{
   void addToGraphicsList(Camera camera, int _layer);///Attach to Subject's list (So no one forgets to do it)
   void removeFromGraphicsList(Camera camera, int _layer);///Remove from Subject's list
   void setLayer(Camera camera, int _layer);
+  void manageCulling(Camera camera);
 }
 
 interface ICanParallax{
@@ -69,7 +70,7 @@ abstract class Graphical<T extends Component<T>> extends Component implements IG
   }
   
   public void setDrawPosition(Camera camera){
-
+      
     PVector camPos = camera.getPosition();
     
     float x = camPos.x;
@@ -93,8 +94,14 @@ abstract class Graphical<T extends Component<T>> extends Component implements IG
   }
   
    public boolean isCulled(){
+    
     return isCulled; 
    }
+  
+  public void manageCulling(Camera camera){
+    if (gameObject.transform.getPosition() != gameObject.transform.getPreviousPosition())
+      checkCulling(camera);
+  }
   
    public void checkCulling(Camera camera){
      PVector currentPos = gameObject.transform.getPosition();
@@ -104,7 +111,6 @@ abstract class Graphical<T extends Component<T>> extends Component implements IG
      currentSize.y *= relativeScale.y;
      isCulled = camera.isInFrame(currentPos, currentSize, drawPos);
    }
-  
 
   public abstract void display(Camera camera);
 
