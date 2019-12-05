@@ -79,8 +79,8 @@ class MapData{
       t.setTag("SmoothUpSlope");
     }    
     
-    if (t != null)
-      t.toggleColliderDisplay(camera, 8, true);
+    /*if (t != null)
+      t.toggleColliderDisplay(camera, 8, true);*/
     
   }
    
